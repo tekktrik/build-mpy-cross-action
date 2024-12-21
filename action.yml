@@ -87,7 +87,7 @@ runs:
         cd ${{ inputs.circuitpython-repo-name }}
         git fetch
         git checkout ${{ inputs.circuitpy-tag }}
-        make fetch-submodules
+        make fetch-all-submodules
     - name: Build mpy-cross
       shell: bash
       run: |
