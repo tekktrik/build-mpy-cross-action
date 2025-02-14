@@ -34,7 +34,7 @@ Examples
 ========
 
 If you have just a repository with files intended for a CircuitPython board, your release
-file could be very simple!  
+file could be very simple!
 
 .. code-block:: yaml
 
@@ -57,8 +57,8 @@ file could be very simple!
 
 You also have granular control of which directories to compile and zip and the ability to specify which
 files should or should not be compiled and/or zipped as well as the ability to specify a different mpy-cross
-For example, if you wanted to compile and zip files in a folder named ``microcontroller`` and you wanted to 
-use a manifest file named ``mpy_manifest.txt`` to specify certain files NOT to compile, using mpy-cross 
+For example, if you wanted to compile and zip files in a folder named ``microcontroller`` and you wanted to
+use a manifest file named ``mpy_manifest.txt`` to specify certain files NOT to compile, using mpy-cross
 version ``7.3.1``, you could modify the script above to be:
 
 .. code-block:: yaml
