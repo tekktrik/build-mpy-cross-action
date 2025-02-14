@@ -80,6 +80,7 @@ runs:
     - name: Compile MPY files
       shell: bash
       run: |
+        echo "Compiling using mpy-cross version ${{ inputs.mpy-cross-version }}"
         # Read MPY manifest file contents, if needed
         if [[ "${{ inputs.mpy-manifest-file }}" != "" ]]
         then
