@@ -20,9 +20,8 @@ Inputs
      Argument Name                                 Description                                       Default                              Notes
 ======================= ===================================================================== ==================== =====================================================================
 github-token            Your GitHub token                                                     N/A                  N/A
-circuitpy-tag           The version of CircuitPython to compile for                           N/A                  You can use any valid tag (or branch) from ``adafruit/circuitpython``
+mpy-cross-version       The version of mpy-cross to download and use                          8.0.5                You can specify any version from ``https://adafruit-circuit-python.s3.amazonaws.com/index.html?prefix=bin/mpy-cross``
 zip-filename            The name of the ZIP file that will be attached                        "mpy-release.zip"    N/A
-circuitpython-repo-name The name of the clone CircuitPython repo                              "circuitpython-repo" Change if it conflicts with another file
 mpy-directory           The directory to search for files to compile                          "." (top folder)     Becomes the basis for filepaths in ``mpy-manifest-file``
 mpy-manifest-file       A file with a list of files to compile or exclude                     ""                   If none is given, all files in ``mpy-directory`` are used
 mpy-manifest-type       Whether the files in the manifest file should be included or excluded "include"            N/A
@@ -35,7 +34,7 @@ Examples
 ========
 
 If you have just a repository with files intended for a CircuitPython board, your release
-file could be very simple!  This release CI creates .mpy files for CircuitPython 8.2.0:
+file could be very simple!  
 
 .. code-block:: yaml
 
@@ -48,19 +47,19 @@ file could be very simple!  This release CI creates .mpy files for CircuitPython
         runs-on: ubuntu-latest
         steps:
         - name: Checkout the current repo
-          uses: actions/checkout@v3
+          uses: actions/checkout@v4
           with:
             submodules: true
         - name: Run MPY Action
-          uses: adafruit/build-mpy@v1
+          uses: adafruit/build-mpy@v2
           with:
             github-token: ${{ secrets.GITHUB_TOKEN }}
-            circuitpy-tag: "8.2.0"
 
 You also have granular control of which directories to compile and zip and the ability to specify which
-files should or should not be compiled and/or zipped.  For example, if you wanted to compile and zip
-files in a folder named ``microcontroller`` and you wanted to use a manifest file named ``mpy_manifest.txt``
-to specify certain files NOT to compile, you could modify the script above to be:
+files should or should not be compiled and/or zipped as well as the ability to specify a different mpy-cross
+For example, if you wanted to compile and zip files in a folder named ``microcontroller`` and you wanted to 
+use a manifest file named ``mpy_manifest.txt`` to specify certain files NOT to compile, using mpy-cross 
+version ``7.3.1``, you could modify the script above to be:
 
 .. code-block:: yaml
 
@@ -73,14 +72,14 @@ to specify certain files NOT to compile, you could modify the script above to be
         runs-on: ubuntu-latest
         steps:
         - name: Checkout the current repo
-          uses: actions/checkout@v3
+          uses: actions/checkout@v4
           with:
             submodules: true
         - name: Run MPY Action
-          uses: adafruit/build-mpy@v1
+          uses: adafruit/build-mpy@v2
           with:
             github-token: ${{ secrets.GITHUB_TOKEN }}
-            circuitpy-tag: "8.2.0"
+            mpy-cross-version: "7.3.1"
             mpy-directory: "microcontroller"
             mpy-manifest-file: "mpy_manifest.txt"
             mpy-manifest-type: "exclude"

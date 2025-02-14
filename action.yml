@@ -8,20 +8,14 @@ inputs:
   github-token:
     description: 'Your GitHub token, needed to upload the ZIP file'
     required: true
-  circuitpy-tag:
-    description: 'The CircuitPython version of mpy-cross to build'
+  mpy-cross-version:
+    description: 'The version of mpy-cross to use'
     required: true
+    default: "8.0.5"
   zip-filename:
     description: 'The name of the ZIP file to attach'
     required: true
     default: "mpy-release.zip"
-  circuitpython-repo-name:
-    description: >
-      The name for the CircuitPython repo.  The default is 'circuitpython-repo',
-      and there typically isn't any reason to change this unless it conflicts
-      with an existing folder name in your repository.
-    required: true
-    default: 'circuitpython-repo'
   mpy-directory:
     description: >
       The directory to look for files to compile with mpy-cross.  If none
@@ -76,40 +70,16 @@ runs:
         sudo apt install build-essential
         sudo add-apt-repository ppa:pybricks/ppa
         sudo apt install git gettext uncrustify
-    - name: Clone adafruit/circuitpython
-      uses: actions/checkout@v3
-      with:
-        repository: adafruit/circuitpython
-        path: ${{ inputs.circuitpython-repo-name }}
-    - name: Enter CircuitPython repo, checkout tag, and update
-      if: ${{ false }}
-      shell: bash
-      run: |
-        function version() {
-          echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }';
-        }
-        cd ${{ inputs.circuitpython-repo-name }}
-        git fetch
-        git checkout ${{ inputs.circuitpy-tag }}
-
-        if [ $(version "${{ inputs.circuitpy-tag }}") -ge $(version "8.2.0") ]; then
-          make fetch-all-submodules
-        else
-          make fetch-submodules
-        fi
     - name: Download mpy-cross
       shell: bash
       run: |
         mkdir mpy-cross
         cd mpy-cross
-        wget -O mpy-cross https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/mpy-cross.static-amd64-linux-8.0.5
+        wget -O mpy-cross https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/mpy-cross.static-amd64-linux-${{ inputs.mpy-cross-version }}
         chmod +x mpy-cross
     - name: Compile MPY files
       shell: bash
       run: |
-        # Store repo name
-        # reponame="${{ inputs.circuitpython-repo-name }}"
-
         # Read MPY manifest file contents, if needed
         if [[ "${{ inputs.mpy-manifest-file }}" != "" ]]
         then
