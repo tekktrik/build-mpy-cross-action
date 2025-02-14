@@ -82,6 +82,7 @@ runs:
         repository: adafruit/circuitpython
         path: ${{ inputs.circuitpython-repo-name }}
     - name: Enter CircuitPython repo, checkout tag, and update
+      if: ${{ false }}
       shell: bash
       run: |
         function version() {
@@ -96,17 +97,18 @@ runs:
         else
           make fetch-submodules
         fi
-    - name: Build mpy-cross
+    - name: Download mpy-cross
       shell: bash
       run: |
-        cd ${{ inputs.circuitpython-repo-name }}/mpy-cross
-        make clean
-        make
+        mkdir mpy-cross
+        cd mpy-cross
+        wget -O mpy-cross https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/mpy-cross.static-amd64-linux-8.0.5
+        chmod +x mpy-cross
     - name: Compile MPY files
       shell: bash
       run: |
         # Store repo name
-        reponame="${{ inputs.circuitpython-repo-name }}"
+        # reponame="${{ inputs.circuitpython-repo-name }}"
 
         # Read MPY manifest file contents, if needed
         if [[ "${{ inputs.mpy-manifest-file }}" != "" ]]
@@ -136,7 +138,7 @@ runs:
             mpyresults+=("$outputmpy")
             prempyfile="${{ inputs.mpy-directory }}/$file"
             prempyfiles+=("$prempyfile")
-            ${reponame}/mpy-cross/mpy-cross $prempyfile -o $outputmpy
+            mpy-cross/mpy-cross $prempyfile -o $outputmpy
           fi
         done
 
