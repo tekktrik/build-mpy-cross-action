@@ -20,7 +20,7 @@ Inputs
      Argument Name                                 Description                                       Default                              Notes
 ======================= ===================================================================== ==================== =====================================================================
 github-token            Your GitHub token                                                     N/A                  N/A
-mpy-cross-version       The version of mpy-cross to download and use                          8.0.5                You can specify any version from ``https://adafruit-circuit-python.s3.amazonaws.com/index.html?prefix=bin/mpy-cross/linux-amd64``
+mpy-cross-version       The version of mpy-cross to download and use                          9.2.4                You can specify any version from ``https://adafruit-circuit-python.s3.amazonaws.com/index.html?prefix=bin/mpy-cross/linux-amd64``
 zip-filename            The name of the ZIP file that will be attached                        "mpy-release.zip"    N/A
 mpy-directory           The directory to search for files to compile                          "." (top folder)     Becomes the basis for filepaths in ``mpy-manifest-file``
 mpy-manifest-file       A file with a list of files to compile or exclude                     ""                   If none is given, all files in ``mpy-directory`` are used
