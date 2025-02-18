@@ -75,7 +75,7 @@ runs:
       run: |
         mkdir mpy-cross
         cd mpy-cross
-        wget -O mpy-cross https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/linux-amd64/mpy-cross-linux-amd64-{{ inputs.mpy-cross-version }}.static
+        wget -O mpy-cross https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/linux-amd64/mpy-cross-linux-amd64-${{ inputs.mpy-cross-version }}.static
         chmod +x mpy-cross
     - name: Compile MPY files
       shell: bash
